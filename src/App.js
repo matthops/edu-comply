@@ -1,25 +1,38 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Navigation from "./components/Navigation";
+import Main from "./components/Main";
+import "./App.css";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import "typeface-roboto";
+
+const theme = createMuiTheme({
+  palette: {
+    type: "light",
+    primary: {
+      main: "#71CCFA",
+      contrastText: "#fff"
+    },
+    secondary: {
+      main: "#2D353C",
+      contrastText: "#000"
+    }
+  },
+  typography: {
+    useNextVariants: true,
+    fontFamily: "'Abel', 'Open Sans', sans-serif"
+  }
+});
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <Navigation />
+          <Main />
+        </MuiThemeProvider>
       </div>
     );
   }
