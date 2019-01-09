@@ -2,8 +2,25 @@ import React, { Component } from "react";
 import TopBar from "./TopBar";
 import axios from "axios";
 import ThemeCard from "./ThemeCard";
+import { withStyles } from "@material-ui/core/styles";
 
-export default class Dashboard extends Component {
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: "center",
+    color: theme.palette.text.secondary
+  },
+  dashWrap: {
+    display: "flex",
+    flexWrap: "wrap",
+    flex: "none"
+  }
+});
+
+class Dashboard extends Component {
   constructor(props) {
     super();
 
@@ -32,7 +49,26 @@ export default class Dashboard extends Component {
       })
     );
   }
+
+  filterArr = (allData, themeId) => {
+    const arr = allData.filter(e => e.themes === themeId);
+    const arrLength = arr.length;
+    let trueCount = arr.filter(e => e.status === "true").length;
+    const falseCount = arrLength - trueCount;
+
+    return (
+      <ThemeCard
+        theme={themeId}
+        total={arrLength}
+        compliantTotal={trueCount}
+        nonCompliantTotal={falseCount}
+        key={themeId}
+      />
+    );
+  };
+
   render() {
+    const { classes } = this.props;
     const {
       allObjectives,
       allCompleteObjectives,
@@ -44,17 +80,26 @@ export default class Dashboard extends Component {
     const sumCompliant = allCompleteObjectives.length;
     const sumNonCompliant = allIncompleteObjectives.length;
 
+    const themeArray = [1, 2, 3, 4, 5];
+    const themeCardComponent = themeArray.map(e =>
+      this.filterArr(allObjectives, e)
+    );
+
     return (
-      <div>
+      <div className={classes.root}>
         <TopBar pageName="dashboard" />
-        <p>dashboard</p>
-        <ThemeCard
-          theme="Summary"
-          total={sumTotal}
-          compliantTotal={sumCompliant}
-          nonCompliantTotal={sumNonCompliant}
-        />
+        <div className={classes.dashWrap}>
+          <ThemeCard
+            theme="Summary"
+            total={sumTotal}
+            compliantTotal={sumCompliant}
+            nonCompliantTotal={sumNonCompliant}
+          />
+          {themeCardComponent}
+        </div>
       </div>
     );
   }
 }
+
+export default withStyles(styles)(Dashboard);

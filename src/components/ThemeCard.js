@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import { ErrorOutline } from "@material-ui/icons";
+import { CheckCircle } from "@material-ui/icons";
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     padding: "1%",
-    width: "32%",
+    width: "350px",
     height: "300px",
     display: "grid"
   },
@@ -15,10 +17,10 @@ const styles = theme => ({
     padding: theme.spacing.unit * 1.5,
     textAlign: "center",
     color: theme.palette.text.secondary,
-
+    width: "350px",
     display: "grid",
-    gridTemplateColumns: "1fr 20px .75fr .75fr 20px 1fr",
-    gridTemplateRows: "30px 60px 20px 1fr 35px 20px"
+    gridTemplateColumns: "50px 40px 20px 45px 45px 20px 40px 50px",
+    gridTemplateRows: "30px 60px 20px 1fr 10px 35px 30px"
   },
   themeBox: {
     gridRowStart: 1,
@@ -36,8 +38,8 @@ const styles = theme => ({
   totalBox: {
     backgroundColor: "#F4F3F3",
     gridRowStart: 4,
-    gridColumnStart: 3,
-    gridColumnEnd: 5,
+    gridColumnStart: 4,
+    gridColumnEnd: 6,
     span: 2,
     // color: "white",
     textTransform: "uppercase",
@@ -52,7 +54,7 @@ const styles = theme => ({
     gridRowStart: 4,
     gridRowEnd: 6,
     gridColumnStart: 1,
-    span: 2,
+    gridColumnEnd: 3,
     textTransform: "uppercase",
     fontFamily: "Open Sans",
     fontSize: "10px",
@@ -63,7 +65,8 @@ const styles = theme => ({
   notCompliantBox: {
     backgroundColor: "#F4F3F3",
     gridRowStart: 4,
-    gridColumnStart: 6,
+    gridColumnStart: 7,
+    gridColumnEnd: -1,
     gridRowEnd: 6,
     textTransform: "uppercase",
     fontFamily: "Open Sans",
@@ -77,15 +80,41 @@ const styles = theme => ({
     fontSize: "30px",
     color: "#018DBB",
     padding: "5px"
+  },
+  svgGraph: {
+    gridRowStart: 6,
+    gridColumnStart: 2,
+    gridColumnEnd: 7
+  },
+  errorStyle: {
+    color: "red",
+    fontSize: 42,
+    gridRowStart: 6,
+    gridColumnStart: 8
+  },
+  checkStyle: {
+    color: "green",
+    fontSize: 42,
+    gridRowStart: 6,
+    gridColumnStart: 1
   }
 });
 
 class ThemeCard extends Component {
   constructor(props) {
     super();
+    this.state = {
+      translateNum: 60
+    };
   }
+
   render() {
     const { classes } = this.props;
+    const percentNum =
+      217 *
+      (this.props.nonCompliantTotal /
+        (this.props.nonCompliantTotal + this.props.compliantTotal));
+    // console.log("check", percentNum);
 
     return (
       <div className={classes.root}>
@@ -98,15 +127,36 @@ class ThemeCard extends Component {
           </div>
 
           <div className={classes.compliantBox}>
-            <div className={classes.mainNum}>{this.props.compliantTotal}> </div>
+            <div className={classes.mainNum}>{this.props.compliantTotal} </div>
             Compliant
           </div>
           <div className={classes.notCompliantBox}>
             <div className={classes.mainNum}>
-              {this.props.nonCompliantTotal}>
+              {this.props.nonCompliantTotal}
             </div>
             Not Compliant
           </div>
+          <CheckCircle
+            className={classes.checkStyle}
+            transform="translate(15,0)"
+          />
+          <div className={classes.svgGraph}>
+            <svg width="217" height="27" transform="translate(0,11)">
+              <g>
+                <rect x="0" y="0" height="20" width="217" fill="green" />
+                <rect
+                  x="300"
+                  y="0"
+                  height="20"
+                  width="217"
+                  fill="red"
+                  transform={`translate(-${percentNum + 83},0)`}
+                  // transform="translate(-85,0)"
+                />
+              </g>
+            </svg>
+          </div>
+          <ErrorOutline className={classes.errorStyle} />
         </Paper>
       </div>
     );

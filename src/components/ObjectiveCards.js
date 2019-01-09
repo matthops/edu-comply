@@ -8,7 +8,8 @@ const styles = theme => ({
     flexGrow: 1,
     paddingTop: "20px",
     width: "90%",
-    display: "grid"
+    display: "grid",
+    paddingLeft: "20px"
   },
   paper: {
     padding: theme.spacing.unit * 1.5,
@@ -20,7 +21,7 @@ const styles = theme => ({
     gridTemplateRows: "2.8em 1.5em"
   },
   buttonBox: {
-    backgroundColor: "#08A84C",
+    // backgroundColor: "#08A84C",
     gridColumnStart: 6,
     color: "white",
     textTransform: "uppercase",
@@ -67,8 +68,33 @@ class ObjectiveCards extends Component {
       objectiveHeadline: "Compile all student agreements"
     };
   }
+
   render() {
     const { classes } = this.props;
+
+    const StatusWord = () => {
+      if (this.props.status === "true") {
+        return (
+          <div
+            className={this.props.classes.buttonBox}
+            style={{ backgroundColor: "#08A84C" }}
+          >
+            Complete
+            {console.log("true")}
+          </div>
+        );
+      } else {
+        return (
+          <div
+            className={this.props.classes.buttonBox}
+            style={{ backgroundColor: "red" }}
+          >
+            {" "}
+            Incomplete{" "}
+          </div>
+        );
+      }
+    };
 
     return (
       <div className={classes.root}>
@@ -77,7 +103,8 @@ class ObjectiveCards extends Component {
 
           <div className={classes.headlineBox}>{this.props.headline}</div>
 
-          <div className={classes.buttonBox}>{this.props.status}</div>
+          <StatusWord />
+
           <div className={classes.taskStatusText}>
             Due Date {this.props.dueDate}
           </div>
