@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import TopBar from "./TopBar";
-import axios from "axios";
-import ThemeCard from "./ThemeCard";
-import { withStyles } from "@material-ui/core/styles";
+import React, { Component } from 'react';
+import TopBar from './TopBar';
+import axios from 'axios';
+import ThemeCard from './ThemeCard';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   root: {
@@ -10,13 +10,13 @@ const styles = theme => ({
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    textAlign: "center",
+    textAlign: 'center',
     color: theme.palette.text.secondary
   },
   dashWrap: {
-    display: "flex",
-    flexWrap: "wrap",
-    flex: "none"
+    display: 'flex',
+    flexWrap: 'wrap',
+    flex: 'none'
   }
 });
 
@@ -30,20 +30,27 @@ class Dashboard extends Component {
       allIncompleteObjectives: []
     };
   }
-  componentDidMount() {
-    axios.get("/api/getallobjectives").then(results =>
-      this.setState({
-        allObjectives: results.data
-      })
-    );
+  async componentDidMount() {
+    // axios.get("/api/getallobjectives").then(results =>
+    //   this.setState({
+    //     allObjectives: results.data
+    //   })
+    // );
 
-    axios.get("/api/getAllCompleteObjectives").then(results =>
+    const response = await axios.get('/api/getallobjectivesByTheme');
+    const json = await response.data;
+
+    this.setState({
+      allObjectives: json
+    });
+
+    axios.get('/api/getAllCompleteObjectives').then(results =>
       this.setState({
         allCompleteObjectives: results.data
       })
     );
 
-    axios.get("/api/getAllIncompleteCompleteObjectives").then(results =>
+    axios.get('/api/getAllIncompleteCompleteObjectives').then(results =>
       this.setState({
         allIncompleteObjectives: results.data
       })
@@ -53,12 +60,12 @@ class Dashboard extends Component {
   filterArr = (allData, themeId) => {
     const arr = allData.filter(e => e.themes === themeId);
     const arrLength = arr.length;
-    let trueCount = arr.filter(e => e.status === "true").length;
+    let trueCount = arr.filter(e => e.status === 'true').length;
     const falseCount = arrLength - trueCount;
 
     return (
       <ThemeCard
-        theme={themeId}
+        theme={arr[0] && arr[0].theme}
         total={arrLength}
         compliantTotal={trueCount}
         nonCompliantTotal={falseCount}
@@ -84,7 +91,7 @@ class Dashboard extends Component {
     const themeCardComponent = themeArray.map(e =>
       this.filterArr(allObjectives, e)
     );
-
+    console.log(allObjectives);
     return (
       <div className={classes.root}>
         <TopBar pageName="dashboard" />

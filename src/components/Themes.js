@@ -21,10 +21,14 @@ export default class Themes extends Component {
 
   render() {
     console.log("Themes", this.state.activeThemes);
+    const themeMap = this.state.activeThemes.map((e, i) => {
+      return <div key={i}> {e.theme} </div>;
+    });
+
     return (
       <div>
         <TopBar pageName="Themes" />
-        <p>Themes</p>
+        {themeMap}
       </div>
     );
   }

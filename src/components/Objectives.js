@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import axios from "axios";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import TopBar from "./TopBar";
-import ObjectiveCards from "./ObjectiveCards";
+import React, { Component } from 'react';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import TopBar from './TopBar';
+import ObjectiveCards from './ObjectiveCards';
 
 const styles = theme => ({
   root: {
@@ -11,7 +11,7 @@ const styles = theme => ({
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    textAlign: "center",
+    textAlign: 'center',
     color: theme.palette.text.secondary
   }
 });
@@ -26,12 +26,12 @@ class Objectives extends Component {
   }
 
   componentDidMount() {
-    axios.get("/api/getallobjectives").then(results =>
+    axios.get('/api/getallobjectives').then(results =>
       this.setState({
         activeObjectives: results.data
       })
     );
-    console.log("CDM", this.state.objectives);
+    console.log('CDM', this.state.objectives);
   }
 
   render() {
@@ -41,10 +41,12 @@ class Objectives extends Component {
       return (
         <ObjectiveCards
           key={e.id}
+          id={e.id}
           headline={e.headline}
           status={e.status}
           dueDate={e.due_date}
           owner={e.owner}
+          description={e.description}
         />
       );
     });

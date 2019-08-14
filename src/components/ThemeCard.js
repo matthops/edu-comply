@@ -29,11 +29,12 @@ const styles = theme => ({
     textAlign: "justify",
     textTransform: "uppercase",
     fontFamily: "Open Sans",
-    fontSize: "20px",
+    fontSize: "18px",
     color: "#F4F3F3",
     letterSpacing: "1.5px",
-    background: "linear-gradient(90deg, #636C72 50%, #F4F3F3 95%)",
-    paddingLeft: "10px"
+    background: "linear-gradient(90deg, #636C72 60%, #F4F3F3 97%)",
+    paddingLeft: "10px",
+    paddingTop: "2px"
   },
   totalBox: {
     backgroundColor: "#F4F3F3",

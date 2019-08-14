@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: 'flex'
   },
   appBar: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -22,37 +22,39 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: "#2D353C"
+    backgroundColor: '#2D353C'
   },
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3
+  },
+  navStyle: {
+    marginTop: '30px'
+  },
+  linkStyle: {
+    textDecoration: 'none',
+    textTransform: 'uppercase',
+    fontFamily: 'Open Sans',
+    letterSpacing: '2px',
+    color: '#fff'
   }
 });
 
-const style = {
-  color: "#fff",
-  textDecoration: "none",
-  textTransform: "uppercase",
-  fontFamily: "Open Sans",
-  letterSpacing: "2px"
-};
-
 const logoStyle = {
-  backgroundColor: "#71CCFA",
-  textTransform: "uppercase",
-  minHeight: "64px",
-  paddingTop: "18px"
+  backgroundColor: '#71CCFA',
+  textTransform: 'uppercase',
+  minHeight: '64px',
+  paddingTop: '18px'
 };
 
 const logoChild = {
-  color: "#fff",
-  textDecoration: "none",
-  textTransform: "uppercase",
-  fontWeight: "bold",
-  letterSpacing: "3.5px"
+  color: '#fff',
+  textDecoration: 'none',
+  textTransform: 'uppercase',
+  fontWeight: 'bold',
+  letterSpacing: '3.5px'
 };
 
 class Navigation extends Component {
@@ -84,18 +86,18 @@ class Navigation extends Component {
             </Typography>
           </div>
           <List>
-            <li>
-              <NavLink style={style} to="/dashboard">
+            <li className={classes.navStyle}>
+              <NavLink className={classes.linkStyle} to="/dashboard">
                 Dashboard
               </NavLink>
             </li>
-            <li>
-              <NavLink style={style} to="/themes">
+            <li className={classes.navStyle}>
+              <NavLink className={classes.linkStyle} to="/themes">
                 Themes
               </NavLink>
             </li>
-            <li>
-              <NavLink style={style} to="/objectives">
+            <li className={classes.navStyle}>
+              <NavLink className={classes.linkStyle} to="/objectives">
                 Objectives
               </NavLink>
             </li>
