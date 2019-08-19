@@ -4,6 +4,7 @@ import Objectives from "./Objectives";
 import Dashboard from "./Dashboard";
 import Home from "./Home";
 import Themes from "./Themes";
+import Tasks from "./Tasks"
 
 const style = {
   paddingLeft: "240px"
@@ -21,6 +22,7 @@ export default class Main extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route path="/tasks" component={Tasks} />
           <Route path="/themes" component={Themes} />
           <Route path="/objectives" component={Objectives} />
         </Switch>

@@ -60,7 +60,7 @@ class Dashboard extends Component {
   filterArr = (allData, themeId) => {
     const arr = allData.filter(e => e.themes === themeId);
     const arrLength = arr.length;
-    let trueCount = arr.filter(e => e.status === 'true').length;
+    let trueCount = arr.filter(e => e.task_status === true).length;
     const falseCount = arrLength - trueCount;
 
     return (

@@ -34,6 +34,16 @@ class Objectives extends Component {
     console.log('CDM', this.state.objectives);
   }
 
+  handleStatusChange = (status, id) => {
+    axios
+      .post('/api/changeStatus', { status, id })
+      .then(results => console.log('results', results));
+
+    this.setState({
+      statusButton: !this.state.statusButton
+    });
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -43,10 +53,12 @@ class Objectives extends Component {
           key={e.id}
           id={e.id}
           headline={e.headline}
-          status={e.status}
+          status={e.task_status}
           dueDate={e.due_date}
           owner={e.owner}
           description={e.description}
+          frequency={e.frequency}
+          handleStatusChange={this.handleStatusChange}
         />
       );
     });

@@ -1,2 +1,2 @@
 select * from objectives
-WHERE status ='false';
+WHERE task_status ='false';

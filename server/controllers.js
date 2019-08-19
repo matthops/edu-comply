@@ -53,11 +53,20 @@ const getAllIncompleteCompleteObjectives = (req, res, next) => {
     )
     .catch(console.log);
 };
+const changeStatus = async (req, res, next) => {
+  const db = req.app.get('db');
+  console.log(typeof !req.body.status, req.body.id);
+
+  db.change_status(req.body.status, req.body.id).then(response =>
+    res.status(200).json(response)
+  );
+};
 
 module.exports = {
   getAllObjectives,
   getAllObjectivesByTheme,
   getAllThemes,
   getAllCompleteObjectives,
-  getAllIncompleteCompleteObjectives
+  getAllIncompleteCompleteObjectives,
+  changeStatus
 };

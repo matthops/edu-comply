@@ -92,13 +92,18 @@ class Navigation extends Component {
               </NavLink>
             </li>
             <li className={classes.navStyle}>
-              <NavLink className={classes.linkStyle} to="/themes">
-                Themes
+              <NavLink className={classes.linkStyle} to="/tasks">
+                Tasks
               </NavLink>
             </li>
             <li className={classes.navStyle}>
               <NavLink className={classes.linkStyle} to="/objectives">
                 Objectives
+              </NavLink>
+            </li>
+            <li className={classes.navStyle}>
+              <NavLink className={classes.linkStyle} to="/themes">
+                Themes
               </NavLink>
             </li>
           </List>

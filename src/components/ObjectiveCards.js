@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
+import { CheckOutlined, Close } from '@material-ui/icons';
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -29,8 +32,7 @@ const styles = theme => ({
     fontFamily: 'Open Sans',
     fontSize: '15px',
     letterSpacing: '2px',
-    fontWeight: 'bold',
-    paddingTop: '10px'
+    fontWeight: 'bold'
   },
   headlineBox: {
     gridColumnStart: 4,
@@ -68,14 +70,45 @@ const styles = theme => ({
     transform: 'translate(-50%, -50%)',
     width: '50%',
     height: '60%',
-    padding: '20px'
+    padding: '30px'
   },
   modalInner: {
     fontFamily: 'Open Sans',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: '10px'
+    justifyContent: 'space-between',
+    padding: '0 0 20px 0',
+    alignItems: 'center'
+  },
+  modalLight: {
+    fontFamily: 'Open Sans',
+    color: '#848f99',
+    fontSize: '12px'
+  },
+  modalDark: {
+    fontFamily: 'Open Sans',
+    fontSize: '20px'
+  },
+  modalUpper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: '20px',
+    justifyContent: 'space-between'
+  },
+  modalHeadline: {
+    fontFamily: 'Open Sans',
+    fontSize: '30px',
+    marginRight: '40px',
+    maxWidth: '100%'
+  },
+  modalUpperInfo: {
+    paddingRight: '20px',
+    minWidth: '50px'
+  },
+  button: {
+    margin: 'theme.spacing(1)',
+    fontFamily: 'Open Sans'
   }
 });
 
@@ -85,8 +118,15 @@ class ObjectiveCards extends Component {
 
     this.state = {
       objectiveHeadline: 'Compile all student agreements',
-      open: false
+      open: false,
+      statusButton: false
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      statusButton: this.props.status
+    });
   }
 
   handleOpen = () => {
@@ -97,31 +137,48 @@ class ObjectiveCards extends Component {
     this.setState({ open: false });
   };
 
+  handleButtonClick = () => {
+    this.props.handleStatusChange(!this.props.status, this.props.id);
+    this.setState({
+      statusButton: !this.state.statusButton
+    });
+  };
+
+  // handleStatusChange = () => {
+  //   const { status, id } = this.props;
+  //   console.log(status, id);
+  //   this.setState({
+  //     statusButton: !this.state.statusButton
+  //   });
+  //   axios
+  //     .post('/api/changeStatus', { status, id })
+  //     .then(results => console.log('results', results));
+  // };
+
   render() {
     const { classes } = this.props;
 
     const StatusWord = () => {
-      const { status } = this.props;
-      if (status && status === true) {
+      const { statusButton } = this.state;
+      if (statusButton && statusButton === true) {
         return (
-          <div
+          <Button
             className={this.props.classes.buttonBox}
             style={{ backgroundColor: '#08A84C' }}
             onClick={this.handleOpen}
           >
             Complete
-          </div>
+          </Button>
         );
       } else {
         return (
-          <div
+          <Button
             className={this.props.classes.buttonBox}
             style={{ backgroundColor: 'red' }}
             onClick={this.handleOpen}
           >
-            {' '}
-            Incomplete{' '}
-          </div>
+            Incomplete
+          </Button>
         );
       }
     };
@@ -142,21 +199,41 @@ class ObjectiveCards extends Component {
         </Paper>
         <Modal open={this.state.open} onClose={this.handleClose}>
           <div className={classes.modalContainer}>
-            <div>
+            <div className={classes.modalUpper}>
               {' '}
-              <h1>{this.props.headline}</h1> <h4>Due {this.props.dueDate}</h4>
+              <div className={classes.modalHeadline}>
+                {this.props.headline}
+              </div>{' '}
+              <Button
+                variant="outlined"
+                className={classes.button}
+                onClick={this.handleButtonClick}
+              >
+                {this.state.statusButton ? <Close /> : <CheckOutlined />}
+                {this.state.statusButton ? ' Mark Incomplete' : 'Mark Complete'}
+              </Button>
             </div>
-            <div>{this.props.description}</div>
             <div className={classes.modalInner}>
-              <div>
-                <h3>Status:</h3>
-                {this.props.status ? 'Complete' : 'Incomplete'}
+              <div className={classes.modalUpperInfo}>
+                <div className={classes.modalLight}> Due Date</div>{' '}
+                <div> {this.props.dueDate}</div>
               </div>
-              <div>
+              <div className={classes.modalUpperInfo}>
+                <div className={classes.modalLight}>Status:</div>
+                {this.state.statusButton ? 'Complete' : 'Incomplete'}
+              </div>
+              <div className={classes.modalUpperInfo}>
                 {' '}
-                <h3>Owner:</h3> <p>{this.props.owner}</p>
+                <div className={classes.modalLight}>Owner:</div>{' '}
+                {this.props.owner}
+              </div>
+              <div className={classes.modalUpperInfo}>
+                <div className={classes.modalLight}>Frequency:</div>{' '}
+                {this.props.frequency}
               </div>
             </div>
+            <div className={classes.modalLight}> Description:</div>
+            <div>{this.props.description}</div>
           </div>
         </Modal>
       </h3>

@@ -26,6 +26,7 @@ app.get(
   '/api/getAllIncompleteCompleteObjectives',
   ctlr.getAllIncompleteCompleteObjectives
 );
+app.post('/api/changeStatus', ctlr.changeStatus);
 
 app.use(express.static(`${__dirname}/../build`));
 
