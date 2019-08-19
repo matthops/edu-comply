@@ -119,11 +119,19 @@ class ObjectiveCards extends Component {
     this.state = {
       objectiveHeadline: 'Compile all student agreements',
       open: false,
-      statusButton: false
+      statusButton: false,
+      tasksArray: []
     };
   }
 
   componentDidMount() {
+    const id = this.props.id;
+    axios.get(`/api/getalltasksbyobjective?id=${id}`).then(result => {
+      this.setState({
+        tasksArray: result.data
+      });
+    });
+
     this.setState({
       statusButton: this.props.status
     });
@@ -143,17 +151,6 @@ class ObjectiveCards extends Component {
       statusButton: !this.state.statusButton
     });
   };
-
-  // handleStatusChange = () => {
-  //   const { status, id } = this.props;
-  //   console.log(status, id);
-  //   this.setState({
-  //     statusButton: !this.state.statusButton
-  //   });
-  //   axios
-  //     .post('/api/changeStatus', { status, id })
-  //     .then(results => console.log('results', results));
-  // };
 
   render() {
     const { classes } = this.props;
@@ -182,7 +179,6 @@ class ObjectiveCards extends Component {
         );
       }
     };
-    console.log(this.props.id);
 
     return (
       <h3 className={classes.root}>
@@ -234,6 +230,12 @@ class ObjectiveCards extends Component {
             </div>
             <div className={classes.modalLight}> Description:</div>
             <div>{this.props.description}</div>
+            <div>
+              <h1> Tasks:</h1>
+              {this.state.tasksArray.map((e, i) => {
+                return <div key={e.id}>{e.headline}</div>;
+              })}
+            </div>
           </div>
         </Modal>
       </h3>

@@ -26,7 +26,10 @@ app.get(
   '/api/getAllIncompleteCompleteObjectives',
   ctlr.getAllIncompleteCompleteObjectives
 );
+app.get('/api/getalltasks', ctlr.getAllTasks);
+app.get('/api/getalltasksbyobjective', ctlr.getAllTasksByObjective);
 app.post('/api/changeStatus', ctlr.changeStatus);
+// app.post('/api/addtask', ctlr.addTask);
 
 app.use(express.static(`${__dirname}/../build`));
 
